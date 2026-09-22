@@ -144,8 +144,9 @@ induire Nadia en erreur.
 
 ![alt text](image.png)
 
-Cellule choisie "I34" qui contient la valeur, "2490€"
+<span style="color: red;">Cellule choisie "I34" qui contient la valeur, "2490€"
 Périmètre I31:I39. L'indicateur de position est 4.
+
 ---
 
 # PARTIE B — Dispersion *(mardi après-midi)*
