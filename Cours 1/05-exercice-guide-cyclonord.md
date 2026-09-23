@@ -131,10 +131,9 @@ Moyenne pondérée  =SOMMEPROD(T_Ventes[Note_client]; T_Ventes[Montant_TTC])
 Attention : la formule pondérée traite les 53 notes vides comme des zéros. En quoi cela fausse-t-il
 le résultat, et comment le corrigerais-tu ?
 
-<span style="color: red;">=MOYENNE(T_ventes[Note_client])
-<span style="color: red;">=SOMMEPROD(T_ventes[Note_client]; T_ventes[Montant_TTC])/ SOMME(T_ventes[Montant_TTC])
+<span style="color: red;">=SOMMEPROD(T_ventes[Note_client];T_ventes[Quantite])/SOMME.SI.ENS(T_ventes[Quantite];T_ventes[Note_client];"<>")
 
-<span style="color: red;"> La meilleure méthode de calcul des moyenne est la pondérée, car elle ne prend pas en compte les valeurs nulle (Coef 0), alors que la moyenne classique compte les valeurs nulles comme des valeurs notées 0.
+<span style="color: red;"> La meilleure méthode de calcul des moyenne est la pondérée, car elle ne prend pas en compte les valeurs nulle (Coef 0), alors que la moyenne classique compte les valeurs nulles comme des valeurs notées 0. J'ai décidé de pondéré par la quantité. Le resultat est 4.16/5.
 
 ## A7 · La phrase de restitution (15 min)
 
@@ -169,8 +168,19 @@ Calcule le **coefficient de variation** (écart-type ÷ moyenne).
 
 ✅ **9,23** soit **923 %**
 
+<span style="color: red;"><br>MIN : =MIN(T_ventes[Montant_TTC]) = 15,20 €</br>
+<br>MAX : =MAX(T_ventes[Montant_TTC]) = 379 050,00 €</br>
+<br>MAX - MIN (étandue)	=MAX(T_ventes[Montant_TTC]) - MIN(T_ventes[Montant_TTC]) = 379 034,80 € </br>
+<br>CARTYPE.STANDARD =ECARTYPE(T_ventes[Montant_TTC]) =	15504,58444</br>
+<br>ECARTYPE.PEARSON =ECARTYPEP(T_ventes[Montant_TTC]) = 15491,9328</br>
+<br>ECARTYPEP =ECARTYPEP(T_ventes[Montant_TTC]) / MOYENNE(T_ventes[Montant_TTC]) = 922,26%</br>
+<br>ECARTYPE	=ECARTYPE(T_ventes[Montant_TTC]) / MOYENNE(T_ventes[Montant_TTC]) = 923,02%</br>
+
+
 **Question B1.** Les deux écarts-types diffèrent de 12 € sur 15 500. Explique en deux lignes
 laquelle des deux fonctions convient ici, et pourquoi la différence est si faible.
+
+<span style="color: red;">L'écart à utiliser est l'écart Pearson car la question ce pose sur tout le tableau, complet et exhaustif.
 
 ## B2 · Le résumé à cinq nombres (30 min)
 
@@ -186,8 +196,18 @@ laquelle des deux fonctions convient ici, et pourquoi la différence est si faib
 
 ✅ 613 · 15,20 € · 50,15 € · 177,00 € · 1 790,00 € · 379 050,00 € · 1 739,85 €
 
-**Question B2.** Complète la phrase : « La moitié des commandes Cyclo'Nord se situe entre ____ € et
-____ €. »
+<span style="color: red;"><br>Effectif =NB(T_ventes[Montant_TTC]) = 613,00 €</br>
+<br>Minimum =MIN(T_ventes[Montant_TTC]) = 15,20 €</br>
+<br>Q1 =QUARTILE.INC(T_ventes[Montant_TTC];1) = 50,15 €</br>
+<br>Médiane =MEDIANE(T_ventes[Montant_TTC]) = 177,00 €</br>
+<br>Q3 =QUARTILE.INC(T_ventes[Montant_TTC];3) = 1 790,00 €</br>
+<br>Maximum =MAX(T_ventes[Montant_TTC]) =379 050,00 € </br>
+<br>IQR =E5-E3 = 1 739,85 €</br>
+
+**Question B2.** Complète la phrase : « La moitié des commandes Cyclo'Nord se situe entre <span style="color: red;">le Q1 = 50,15 € et le 
+<span style="color: red;">Q3 = 1 790,00 €. »
+
+
 
 ## B3 · Repérer les valeurs atypiques (40 min)
 
@@ -200,20 +220,44 @@ Nb au-dessus du seuil haut  =NB.SI.ENS(T_Ventes[Montant_TTC]; ">"&Seuil_haut)   
 Nb en dessous du seuil bas  =NB.SI.ENS(T_Ventes[Montant_TTC]; "<"&Seuil_bas)    → ?
 ```
 
+<span style="color: red;">Effectif =NB(T_ventes[Montant_TTC]) = 613,00 €</br>
+<br>Minimum =MIN(T_ventes[Montant_TTC]) = 15,20 €</br>
+<br>Q1 =QUARTILE.INC(T_ventes[Montant_TTC];1) = 50,15 €</br>
+<br>Médiane =MEDIANE(T_ventes[Montant_TTC]) = 177,00 €</br>
+<br>Q3 =QUARTILE.INC(T_ventes[Montant_TTC];3) = 1 790,00 €</br>
+<br>Maximum =MAX(T_ventes[Montant_TTC]) = 379 050,00 €</br>
+<br>IQR =E5-E3 = 1 739,85 €</br>
+
 ✅ −2 559,62 € · 4 399,77 € · **14** · **0**
+
+<span style="color: red;"><br>Seuil_bas = E3 - 1,5*E7 = -2 559,63 €</br>
+<br>Seuil_haut = E5 + 1,5*E7 = 4 399,78 €</br>
+<br>Nb au-dessus du seuil haut =NB.SI.ENS(T_ventes[Montant_TTC]; ">"&B11)= 14€</br>
+<br>Nb en dessous du seuil bas = =NB.SI.ENS(T_ventes[Montant_TTC]; "<"&B10) =0€</br>
 
 Utilise ensuite `GRANDE.VALEUR` pour afficher les **cinq plus gros montants**, puis retrouve les
 lignes correspondantes (tri décroissant sur `Montant_TTC`, ou double-clic dans un TCD demain).
 
+<span style="color: red;"><br>=GRANDE.VALEUR(T_ventes[Montant_TTC]; 1) = 379050</br>
+<br>=GRANDE.VALEUR(T_ventes[Montant_TTC]; 2) = 59415</br>
+<br>=GRANDE.VALEUR(T_ventes[Montant_TTC]; 3) = 7980</br>
+<br>=GRANDE.VALEUR(T_ventes[Montant_TTC]; 4) = 7980</br>
+<br>=GRANDE.VALEUR(T_ventes[Montant_TTC]; 5) = 7980</br>
+
 ✅ Top 3 : **379 050 €** (CMD-20250566, Arras, VAE, quantité 100, **Annulée**) ·
 **59 415 €** (CMD-20250284, Lens, Vélo urbain, quantité 100, En cours) · **7 980 €** (4 ex æquo)
 
+
 **Question B3.** Le seuil bas est négatif. Est-ce un bug ? Que faut-il en conclure sur la forme de
 la distribution ?
+<span style="color: red;"><br>Ce n'est point un bg cela signifie que la moitié basse des ventes est très resserée. La distriution est très asymètrique.</br>
 
 **Question B4.** Pour chacune des trois commandes de quantité 100, dis si tu la gardes, si tu
 l'écartes ou si tu l'analyses à part — et **justifie**. Aucune des trois réponses n'est
 automatiquement fausse ; c'est la justification qui compte.
+
+<span style="color: red;"><br>J'écarte les 3 entrées, car il y a un trop gros écart entre les 100, et le reste des valeurs.</br>
+
 
 ## B4 · Mesurer l'effet d'une seule ligne (30 min)
 
@@ -222,10 +266,10 @@ Recalcule moyenne, médiane, écart-type et IQR **en excluant la seule commande 
 
 | Mesure | Avec | Sans | Variation en % |
 |---|---|---|---|
-| Moyenne | 1 679,77 € | | |
-| Médiane | 177,00 € | | |
-| Écart-type | 15 504,58 € | | |
-| IQR | 1 739,85 € | | |
+| Moyenne | 1 679,77 € |<span style="color: red;">=MOYENNE.SI.ENS(T_ventes[Montant_TTC];T_ventes[ID_commande];"<>CMD-20250566") = 1 063,15€ |  s-a/a |
+| Médiane | 177,00 € | <span style="color: red;">=ARRAY_CONSTRAIN(ARRAYFORMULA(MEDIANE(SI((T_ventes[ID_commande]<>"CMD-20250566");T_ventes[Montant_TTC]))); 1; 1) = 177€ | |
+| Écart-type | 15 504,58 € | <span style="color: red;">=ARRAY_CONSTRAIN(ARRAYFORMULA(ECARTYPE(SI((T_ventes[ID_commande]<>"CMD-20250566");T_ventes[Montant_TTC]))); 1; 1) = 177€ |lolo |
+| IQR | 1 739,85 € |<span style="color: red;">=ARRAY_CONSTRAIN(ARRAYFORMULA(QUARTILE.INC(SI((T_ventes[ID_commande]<>"CMD-20250566");T_ventes[Montant_TTC]);3)); 1; 1) = 1723,25€| |
 
 ✅ Sans : 1 063,15 € (−37 %) · 177,00 € (0 %) · 2 707,51 € (−83 %) · 1 673,10 € (−4 %)
 
