@@ -92,11 +92,11 @@ Construis, **avec des formules** (pas de TCD, pas de filtre manuel), le tableau 
 
 | Catégorie | Nb commandes | CA total | Montant moyen |
 |---|---|---|---|
-| Accessoires |<span style="color: red;">C=NB.SI.ENS(T_ventes[Categorie]; "Accessoires") = 187 | <span style="color: red;">C=SOMME.SI.ENS(T_ventes[Montant_TTC]; T_ventes[Categorie] ; "Accessoires") = 15 730.75 | |
-| Atelier |<span style="color: red;">C=NB.SI.ENS(T_ventes[Categorie]; "Atelier") = 134| <span style="color: red;">C=SOMME.SI.ENS(T_ventes[Montant_TTC]; T_ventes[Categorie] ; "Atelier") = 7874.7€| |
-| VAE | <span style="color: red;">C=NB.SI.ENS(T_ventes[Categorie]; "VAE") = 97|<span style="color: red;">C =SOMME.SI.ENS(T_ventes[Montant_TTC]; T_ventes[Categorie] ; "VAE") = 672 822.5€| |
-| VTT | <span style="color: red;">C=NB.SI.ENS(T_ventes[Categorie]; "VTT") = 88|<span style="color: red;">C=SOMME.SI.ENS(T_ventes[Montant_TTC]; T_ventes[Categorie] ; "VTT") = 157 276.05€| |
-| Vélo urbain | <span style="color: red;">C=NB.SI.ENS(T_ventes[Categorie]; "Vélo urbain") = 105|<span style="color: red;">C=SOMME.SI.ENS(T_ventes[Montant_TTC]; T_ventes[Categorie] ; "Vélo urbain") : 175 996.5€| |
+| Accessoires |<span style="color: red;">=NB.SI.ENS(T_ventes[Categorie]; "Accessoires") = 187 | <span style="color: red;">=SOMME.SI.ENS(T_ventes[Montant_TTC]; T_ventes[Categorie] ; "Accessoires") = 15 730.75 | |
+| Atelier |<span style="color: red;">=NB.SI.ENS(T_ventes[Categorie]; "Atelier") = 134| <span style="color: red;">=SOMME.SI.ENS(T_ventes[Montant_TTC]; T_ventes[Categorie] ; "Atelier") = 7874.7€| |
+| VAE | <span style="color: red;">=NB.SI.ENS(T_ventes[Categorie]; "VAE") = 97|<span style="color: red;"> =SOMME.SI.ENS(T_ventes[Montant_TTC]; T_ventes[Categorie] ; "VAE") = 672 822.5€| |
+| VTT | <span style="color: red;">NB.SI.ENS(T_ventes[Categorie]; "VTT") = 88|<span style="color: red;">=SOMME.SI.ENS(T_ventes[Montant_TTC]; T_ventes[Categorie] ; "VTT") = 157 276.05€| |
+| Vélo urbain | <span style="color: red;">=NB.SI.ENS(T_ventes[Categorie]; "Vélo urbain") = 105|<span style="color: red;">=SOMME.SI.ENS(T_ventes[Montant_TTC]; T_ventes[Categorie] ; "Vélo urbain") : 175 996.5€| |
 | **Total** | | | |
 
 Formules à utiliser : `NB.SI.ENS`, `SOMME.SI.ENS`, `MOYENNE.SI.ENS`.
@@ -141,10 +141,8 @@ le résultat, et comment le corrigerais-tu ?
 d'une commande Cyclo'Nord. Elle doit contenir un indicateur de position, son périmètre, et ne pas
 induire Nadia en erreur.
 
-![alt text](image.png)
 
-<span style="color: red;">Cellule choisie "I34" qui contient la valeur, "2490€"
-Périmètre I31:I39. L'indicateur de position est 4.
+<span style="color: red;">=MEDIANE(T_ventes[Montant_TTC]) = 177€.
 
 ---
 
