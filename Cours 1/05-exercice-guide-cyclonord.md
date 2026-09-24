@@ -266,14 +266,19 @@ Recalcule moyenne, médiane, écart-type et IQR **en excluant la seule commande 
 
 | Mesure | Avec | Sans | Variation en % |
 |---|---|---|---|
-| Moyenne | 1 679,77 € |<span style="color: red;">=MOYENNE.SI.ENS(T_ventes[Montant_TTC];T_ventes[ID_commande];"<>CMD-20250566") = 1 063,15€ |  s-a/a |
-| Médiane | 177,00 € | <span style="color: red;">=ARRAY_CONSTRAIN(ARRAYFORMULA(MEDIANE(SI((T_ventes[ID_commande]<>"CMD-20250566");T_ventes[Montant_TTC]))); 1; 1) = 177€ | |
-| Écart-type | 15 504,58 € | <span style="color: red;">=ARRAY_CONSTRAIN(ARRAYFORMULA(ECARTYPE(SI((T_ventes[ID_commande]<>"CMD-20250566");T_ventes[Montant_TTC]))); 1; 1) = 177€ |lolo |
-| IQR | 1 739,85 € |<span style="color: red;">=ARRAY_CONSTRAIN(ARRAYFORMULA(QUARTILE.INC(SI((T_ventes[ID_commande]<>"CMD-20250566");T_ventes[Montant_TTC]);3)); 1; 1) = 1723,25€| |
+| Moyenne | 1 679,77 € |<span style="color: red;">=MOYENNE.SI.ENS(T_ventes[Montant_TTC];T_ventes[ID_commande];"<>CMD-20250566") = 1 063,15€ |  <span style="color: red;"> =-(1-(MOYENNE.SI.ENS(T_ventes[Montant_TTC];T_ventes[ID_commande];"<>CMD-20250566"))/MOYENNE(T_ventes[Montant_TTC])) |
+| Médiane | 177,00 € | <span style="color: red;">=ARRAY_CONSTRAIN(ARRAYFORMULA(MEDIANE(SI((T_ventes[ID_commande]<>"CMD-20250566");T_ventes[Montant_TTC]))); 1; 1) = 177€ |<span style="color: red;">=-(1-(ARRAY_CONSTRAIN(ARRAYFORMULA(MEDIANE(SI((T_ventes[ID_commande]<>"CMD-20250566");T_ventes[Montant_TTC]))); 1; 1)/MEDIANE(T_ventes[Montant_TTC]))) |
+| Écart-type | 15 504,58 € | <span style="color: red;">=ARRAY_CONSTRAIN(ARRAYFORMULA(ECARTYPE(SI((T_ventes[ID_commande]<>"CMD-20250566");T_ventes[Montant_TTC]))); 1; 1) = 177€ |<span style="color: red;"> =-(1-(ARRAY_CONSTRAIN(ARRAYFORMULA(ECARTYPEP(SI((T_ventes[ID_commande]<>"CMD-20250566");T_ventes[Montant_TTC]))); 1; 1))/ECARTYPE(T_ventes[Montant_TTC]))|
+| IQR | 1 739,85 € |<span style="color: red;">=ARRAY_CONSTRAIN(ARRAYFORMULA(QUARTILE.INC(SI((T_ventes[ID_commande]<>"CMD-20250566");T_ventes[Montant_TTC]);3)); 1; 1) = 1723,25€|<span style="color: red;">=ARRAYFORMULA(((QUARTILE.INC(SI(T_ventes[ID_commande]<>"CMD-20250566"; T_ventes[Montant_TTC]); 3) - QUARTILE.INC(SI(T_ventes[ID_commande]<>"CMD-20250566"; T_ventes[Montant_TTC]); 1)) - (QUARTILE.INC(T_ventes[Montant_TTC]; 3) - QUARTILE.INC(T_ventes[Montant_TTC]; 1))) / (QUARTILE.INC(T_ventes[Montant_TTC]; 3) - QUARTILE.INC(T_ventes[Montant_TTC]; 1))) |
 
 ✅ Sans : 1 063,15 € (−37 %) · 177,00 € (0 %) · 2 707,51 € (−83 %) · 1 673,10 € (−4 %)
 
-**Question B5.** Classe ces quatre indicateurs du plus **robuste** au plus **sensible**.
+**Question B5.** Classe ces quatre indicateurs du plus **robuste** au plus **sensible**.<span style="color: red;"><br>
+Mediane est là plus robuste (0%)<br>
+IQR ensuite (4%)<br>
+Moyenne (37%)<br>
+et pour finir la plus senssible (84%)<br>
+
 
 ## B5 · La boîte à moustaches (30 min)
 
