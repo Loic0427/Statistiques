@@ -84,7 +84,7 @@ d'affaires 2025 » ?
 
 <span style="color: red;">=SOMME.SI.ENS(T_ventes[Montant_TTC]; T_ventes[Statut]; "Livrée") / SOMME(T_ventes[Montant_TTC]) * 100
 
-<span style="color: red;"> Nadia dit nimp, le CA est de 343 877,45€
+<span style="color: red;"> Le CA est de 343 877,45€
 
 ## A5 · Calculer par sous-ensemble (45 min)
 
